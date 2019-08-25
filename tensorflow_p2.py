@@ -18,7 +18,7 @@ def create_training_data():
     for category in CATEGORIES:
         path = os.path.join(DATADIR, category) # path to cats or dogs dir
         class_num = CATEGORIES.index(category)
-        for img in os.listdir(path)[:10]: # remove [:10] once done
+        for img in os.listdir(path)[:100]: # remove [:10] once done
             try:
                 img_array = cv2.imread(os.path.join(path,img),cv2.IMREAD_GRAYSCALE) # grayscale because colour isn't a differentiating factor
                 new_array = cv2.resize(img_array,(IMG_SIZE,IMG_SIZE))
