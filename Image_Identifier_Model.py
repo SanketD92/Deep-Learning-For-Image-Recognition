@@ -21,17 +21,17 @@ model.add(Activation("relu"))
 model.add(MaxPooling2D(pool_size=(2,2)))
 
 # Layer 2
-model.add(Conv2D(64,(3,3))) # Deeper convolution filter identifies more complex features of the input image
+model.add(Conv2D(32,(3,3))) # Deeper convolution filter identifies more complex features of the input image
 model.add(Activation("relu"))
 model.add(MaxPooling2D(pool_size=(2,2)))
 
-# Layer 2
-model.add(Conv2D(128,(3,3))) # Deeper convolution filter identifies more complex features of the input image
+# Layer 3
+model.add(Conv2D(64,(3,3)))
 model.add(Activation("relu"))
 model.add(MaxPooling2D(pool_size=(2,2)))
 
 # Layer 4
-model.add(Flatten())
+model.add(Flatten()) # The first Dense layer should be preceded by Flatten
 model.add(Dense(64))
 model.add(Activation("relu"))
 
@@ -42,4 +42,4 @@ model.add(Activation("sigmoid"))
 model.compile(loss="binary_crossentropy",  # binary since data is dogs or cats
 optimizer="adam",metrics=["accuracy"])
 
-model.fit(X,Y,epochs=3, batch_size = 500) # batch size depends on data size
+model.fit(X,Y,epochs=10, batch_size = 500) # batch size depends on data size
