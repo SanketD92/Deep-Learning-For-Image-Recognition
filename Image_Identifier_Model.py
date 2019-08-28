@@ -10,7 +10,7 @@ import pickle
 X = pickle.load(open("X.pickle","rb"))
 Y = pickle.load(open("Y.pickle","rb"))
 
-X = tf.keras.utils.normalize(X) # Normalize image data for quicker processing
+X = X/1000.0 # Normalize image data for quicker processing
 
 model = Sequential()
 # Layer 1
@@ -21,18 +21,18 @@ model.add(Activation("relu"))
 model.add(MaxPooling2D(pool_size=(2,2)))
 
 # Layer 2
-model.add(Conv2D(32,(3,3))) # Deeper convolution filter identifies more complex features of the input image
+model.add(Conv2D(64,(3,3))) # Deeper convolution filter identifies more complex features of the input image
 model.add(Activation("relu"))
 model.add(MaxPooling2D(pool_size=(2,2)))
 
 # Layer 3
-model.add(Conv2D(64,(3,3)))
+model.add(Conv2D(128,(3,3)))
 model.add(Activation("relu"))
 model.add(MaxPooling2D(pool_size=(2,2)))
 
 # Layer 4
 model.add(Flatten()) # The first Dense layer should be preceded by Flatten
-model.add(Dense(64))
+model.add(Dense(128))
 model.add(Activation("relu"))
 
 # Layer 5
@@ -42,4 +42,4 @@ model.add(Activation("sigmoid"))
 model.compile(loss="binary_crossentropy",  # binary since data is dogs or cats
 optimizer="adam",metrics=["accuracy"])
 
-model.fit(X,Y,epochs=10, batch_size = 500) # batch size depends on data size
+model.fit(X,Y,epochs=10, batch_size = 200) # batch size depends on data size
