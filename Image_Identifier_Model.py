@@ -2,10 +2,15 @@ import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Activation, Flatten, Conv2D, MaxPooling2D
 from tensorflow.keras.utils import normalize
+from tensorflow.keras.callbacks import TensorBoard
 import pickle
+import time
 
 #gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.33) # can reduce gpu fraction less than 100% when running multiple models in parallel
 #sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+
+NAME = "Cats-vs-Dogs-cnn-64x2-{}".format(int(time.time()))
+tensorboard = TensorBoard(log_dir='logs\{}'.format(NAME))
 
 X = pickle.load(open("X.pickle","rb"))
 Y = pickle.load(open("Y.pickle","rb"))
@@ -42,4 +47,4 @@ model.add(Activation("sigmoid"))
 model.compile(loss="binary_crossentropy",  # binary since data is dogs or cats
 optimizer="adam",metrics=["accuracy"])
 
-model.fit(X,Y,epochs=10, batch_size = 200) # batch size depends on data size
+model.fit(X,Y,epochs=10, batch_size = 200, validation_split = 0.1, callbacks = [tensorboard]) # batch size depends on data size
