@@ -1,50 +1,64 @@
-import tensorflow as tf
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Activation, Flatten, Conv2D, MaxPooling2D
-from tensorflow.keras.utils import normalize
+from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten
+from tensorflow.keras.layers import Conv2D, MaxPooling2D
 from tensorflow.keras.callbacks import TensorBoard
 import pickle
 import time
 
-#gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.33) # can reduce gpu fraction less than 100% when running multiple models in parallel
-#sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+pickle_in = open("X.pickle","rb")
+X = pickle.load(pickle_in)
 
-NAME = "Cats-vs-Dogs-cnn-64x2-{}".format(int(time.time()))
-tensorboard = TensorBoard(log_dir='logs\{}'.format(NAME))
+pickle_in = open("Y.pickle","rb")
+y = pickle.load(pickle_in)
 
-X = pickle.load(open("X.pickle","rb"))
-Y = pickle.load(open("Y.pickle","rb"))
+X = X/255.0     # Normalize image data for quicker processing
 
-X = X/1000.0 # Normalize image data for quicker processing
+dense_layers = [0, 1, 2, 3]
+layer_sizes = [32, 64, 128, 256, 512]       # These don't need to be in 2's power ranges, just used as an example
+conv_layers = [1, 2, 3, 4, 5]
 
-model = Sequential()
-# Layer 1
-# Convolution is used to find cross-correlation between the filter and the image window
-model.add(Conv2D(32,(3,3), input_shape = X.shape[1:])) # (Number of output filters, Size of convolution window, H x W of input irrelevant of colour)
-model.add(Activation("relu"))
-# After convolution, output size decreases but features identified increases number of output images, which requires sampling or pooling
-model.add(MaxPooling2D(pool_size=(2,2)))
+for dense_layer in dense_layers:
+    for layer_size in layer_sizes:
+        for conv_layer in conv_layers:
+            NAME = "{}-conv-{}-nodes-{}-dense-{}".format(conv_layer, layer_size, dense_layer, int(time.time()))
+            print(NAME)
 
-# Layer 2
-model.add(Conv2D(64,(3,3))) # Deeper convolution filter identifies more complex features of the input image
-model.add(Activation("relu"))
-model.add(MaxPooling2D(pool_size=(2,2)))
+            model = Sequential()
+            
+            # Layer 1
+            # Convolution is used to find cross-correlation between the filter and the image window
+            model.add(Conv2D(layer_size, (3, 3), input_shape=X.shape[1:]))
+            model.add(Activation('relu'))
+            # After convolution, output size decreases but features identified increases number of output images, which requires sampling or pooling
+            model.add(MaxPooling2D(pool_size=(2, 2)))
 
-# Layer 3
-model.add(Conv2D(128,(3,3)))
-model.add(Activation("relu"))
-model.add(MaxPooling2D(pool_size=(2,2)))
+            # Additional Layers based on conv_layer loop
+            # Deeper convolution filter identifies more complex features of the input image
+            for l in range(conv_layer-1):
+                model.add(Conv2D(layer_size, (3, 3)))
+                model.add(Activation('relu'))
+                model.add(MaxPooling2D(pool_size=(2, 2)))
 
-# Layer 4
-model.add(Flatten()) # The first Dense layer should be preceded by Flatten
-model.add(Dense(128))
-model.add(Activation("relu"))
+            # The first Dense layer should be preceded by Flatten
+            model.add(Flatten())
 
-# Layer 5
-model.add(Dense(1))
-model.add(Activation("sigmoid"))
+            # Dense Layers based on dense_layer loop
+            for _ in range(dense_layer):
+                model.add(Dense(layer_size))
+                model.add(Activation('relu'))
 
-model.compile(loss="binary_crossentropy",  # binary since data is dogs or cats
-optimizer="adam",metrics=["accuracy"])
+            model.add(Dense(1))
+            model.add(Activation('sigmoid'))
 
-model.fit(X,Y,epochs=10, batch_size = 200, validation_split = 0.1, callbacks = [tensorboard]) # batch size depends on data size
+            tensorboard = TensorBoard(log_dir="logs/{}".format(NAME))
+
+            model.compile(loss='binary_crossentropy',   # binary since data is dogs or cats
+                          optimizer='adam',
+                          metrics=['accuracy'],
+                          )
+
+            model.fit(X, y,
+                      batch_size=32,                    # batch size depends on data size
+                      epochs=100,
+                      validation_split=0.3,
+                      callbacks=[tensorboard])
