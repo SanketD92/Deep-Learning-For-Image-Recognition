@@ -1,4 +1,7 @@
 # Deep-Learning Models with TensorFlow & Keras
+<p align="center">
+<img src="assets/robo_dude.png" width="625"/>
+</p>
 ## Create Training Data
 
 ## Customize model
