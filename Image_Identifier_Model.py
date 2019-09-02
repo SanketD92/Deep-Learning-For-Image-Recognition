@@ -1,9 +1,14 @@
+import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten
 from tensorflow.keras.layers import Conv2D, MaxPooling2D
 from tensorflow.keras.callbacks import TensorBoard
 import pickle
 import time
+
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+sess = tf.Session(config=config)
 
 pickle_in = open("X.pickle","rb")
 X = pickle.load(pickle_in)
@@ -13,9 +18,9 @@ y = pickle.load(pickle_in)
 
 X = X/255.0     # Normalize image data for quicker processing
 
-dense_layers = [0, 1, 2, 3]
-layer_sizes = [32, 64, 128, 256, 512]       # These don't need to be in 2's power ranges, just used as an example
-conv_layers = [1, 2, 3, 4, 5]
+dense_layers = [0, 1, 2]
+layer_sizes = [32, 64, 128]       # These don't need to be in 2's power ranges, just used as an example
+conv_layers = [1, 2, 3]
 
 for dense_layer in dense_layers:
     for layer_size in layer_sizes:
@@ -50,7 +55,7 @@ for dense_layer in dense_layers:
             model.add(Dense(1))
             model.add(Activation('sigmoid'))
 
-            tensorboard = TensorBoard(log_dir="logs/{}".format(NAME))
+            tensorboard = TensorBoard(log_dir="logs2/{}".format(NAME))
 
             model.compile(loss='binary_crossentropy',   # binary since data is dogs or cats
                           optimizer='adam',
@@ -58,7 +63,8 @@ for dense_layer in dense_layers:
                           )
 
             model.fit(X, y,
-                      batch_size=32,                    # batch size depends on data size
-                      epochs=20,
+                      batch_size=50,                    # batch size depends on data size
+                      epochs=10,
                       validation_split=0.3,
                       callbacks=[tensorboard])
+            
