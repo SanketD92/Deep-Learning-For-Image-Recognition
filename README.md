@@ -16,9 +16,10 @@ The input layer is where the pre-identified training data comes in and "teach" t
 
 ## Create Training Data
 I'll be using one of the most prevalent datasets for image recognition - Cats vs Dogs. Since the size of the dataset (or the pickled version of it) is quite large, I'll include the link for where to get it:
-https://www.microsoft.com/en-us/download/details.aspx?id=54765&WT.mc_id=rss_alldownloads_devresources
 
-'''python
+- https://www.microsoft.com/en-us/download/details.aspx?id=54765&WT.mc_id=rss_alldownloads_devresources
+
+```python
 DATADIR = "Where\You\Placed\Your\DataSet" # "C:\\SomeFolder\\PetImages"
 CATEGORIES = ["Dog","Cat"]
 IMG_SIZE = 100
@@ -34,7 +35,7 @@ def create_training_data():
                 training_data.append([new_array, class_num])
             except Exception as e:
                 pass
-'''
+```
 
 > All training images have certain features that are helpful in differentiating between the given categories, and in order to only use those differentiating features in the hidden layers, we need to get rid of the the non-feature data from these images (for example - color and image size are components of the data but do not determine whether the image is of a cat or a dog).
 
