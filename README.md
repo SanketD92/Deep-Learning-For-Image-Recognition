@@ -2,38 +2,43 @@
 <p align="center">
 <img src="assets/robo_dude.png" width="625"/>
 </p>
+
+## Basics of a Neural Network
+Usually we feed a computer instructions to compute data in a predetermined way, and the output is therefore a function of that algorithm programmed as such. A neural network is the exact opposite. If we imagine a black box for representing the neural network, that box would contain the following:
+
+<p align="center">
+<img src="assets/neural_network.jpeg" width="625"/>
+</p>
+
+The input layer is where the pre-identified training data comes in and "teach" the neural network. The output layer is where the neural network gathers instructions to predict new data and classify it into previously identified as accurately as possible. This accuracy is dependent upon the size of the training data (the more you teach a model with new data, the better it gets at predicting) and the configuration of the hidden layers. The hidden layers are responsible for extracting features from training data which are then collated and compiled into a model.
+
+> One hidden layer means you just have a neural network. Two or more hidden layers? Boom, you've got a deep neural network! Multiple hidden layers allows the network to create non-linear relationships between the input and the output.
+
 ## Create Training Data
+I'll be using one of the most prevalent datasets for image recognition - Cats vs Dogs. Since the size of the dataset (or the pickled version of it) is quite large, I'll include the link for where to get it:
+https://www.microsoft.com/en-us/download/details.aspx?id=54765&WT.mc_id=rss_alldownloads_devresources
+
+'''python
+DATADIR = "Where\You\Placed\Your\DataSet" # "C:\\SomeFolder\\PetImages"
+CATEGORIES = ["Dog","Cat"]
+IMG_SIZE = 100
+
+def create_training_data():
+    for category in CATEGORIES:
+        path = os.path.join(DATADIR, category) # path to cats or dogs dir
+        class_num = CATEGORIES.index(category)
+        for img in os.listdir(path):
+            try:
+                img_array = cv2.imread(os.path.join(path,img),cv2.IMREAD_GRAYSCALE) # grayscale because colour isn't a differentiating factor
+                new_array = cv2.resize(img_array,(IMG_SIZE,IMG_SIZE))
+                training_data.append([new_array, class_num])
+            except Exception as e:
+                pass
+'''
+
+> All training images have certain features that are helpful in differentiating between the given categories, and in order to only use those differentiating features in the hidden layers, we need to get rid of the the non-feature data from these images (for example - color and image size are components of the data but do not determine whether the image is of a cat or a dog).
 
 ## Customize model
-
-## Performance tracking using TensorBoard
-
-## Testing the Selected Model
-
-
-
-Input Sinogram             |  Output should be close to
-:-------------------------:|:-------------------------:
-![](/Assets/Phantom_Sinogram.jpg)  |  ![](Assets/Phantom.png)
-
-<p align="center">
-<img src="Assets/Moment_zero.jpg" width="425"/>
-</p>
-
-
->The striking result of it being a flat line is because no matter which angle the projection is being taken from, the sum of the attenuation intensity will be constant since the object features are static.
-
-Filtered Sinogram             |  Filtered vs Original
-:-------------------------:|:-------------------------:
-![](/Assets/Filtered_Sinogram.jpg)  |  ![](Assets/Filtered_vs_Original_Sinogram_45deg.png)
-
-<p align="center">
-<img src="Assets/Filtered_Backprojected.jpg" width="425"/>
-</p>
-
-> As compared to our simple back-projected image, we see that the Ram-Lak filter has been able to remove low frequency noise (haze), improve contrast, thereby improving the total signal-to-noise ratio. The resolution also seems to have increased but mainly due to the increased sharpness and improved contrast.
-
-
 ```python
 for dense_layer in dense_layers:
     for layer_size in layer_sizes:
@@ -68,7 +73,7 @@ for dense_layer in dense_layers:
             model.add(Dense(1))
             model.add(Activation('sigmoid'))
 
-            tensorboard = TensorBoard(log_dir="logs2/{}".format(NAME))
+            tensorboard = TensorBoard(log_dir="logs/{}".format(NAME))
 
             model.compile(loss='binary_crossentropy',   # binary since data is dogs or cats
                           optimizer='adam',
@@ -81,4 +86,10 @@ for dense_layer in dense_layers:
                       validation_split=0.3,
                       callbacks=[tensorboard])
 ```
+
+
+## Performance tracking using TensorBoard
+
+## Testing the Selected Model
+
 
