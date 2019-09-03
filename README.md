@@ -1,4 +1,4 @@
-# Deep-Learning Models with TensorFlow & Keras
+# Deep Learning for Image Recognition (TensorFlow & Keras)
 <p align="center">
 <img src="assets/robo_dude.png" width="625"/>
 </p>
