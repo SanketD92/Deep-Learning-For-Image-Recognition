@@ -5,7 +5,7 @@ import cv2
 import random
 import pickle
 
-DATADIR = "Where\You\Placed\Your\DataSet" # "C:\\Users\\sanket.dharwadkar\\Downloads\\PetImages"
+DATADIR = "Where\You\Placed\Your\DataSet" # "C:\\SomeFolder\\PetImages"
 CATEGORIES = ["Dog","Cat"]
 IMG_SIZE = 100
 
