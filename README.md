@@ -22,7 +22,7 @@ I'll be using one of the most prevalent datasets for image recognition - Cats vs
 - Convert all images to greyscale or perform histogram equalization to retain color
 
 <p align="center">
-<img src="assets/cats-dogs.jpg" width="525"/>
+<img src="assets/cats-dogs.jpg"/>
 </p>
 
 > All training images have certain features that are helpful in differentiating between the given categories, and in order to only use those differentiating features in the hidden layers, we need to get rid of the the non-feature data from these images (for example - color and image size are components of the data but do not determine whether the image is of a cat or a dog).
@@ -42,7 +42,7 @@ for dense_layer in dense_layers:
     for layer_size in layer_sizes:
         for conv_layer in conv_layers:
             
-            # Training Convolutional Neural Networks w.r.t layers decided per loop.
+            # Training Convolutional Neural Networks according to layer configurations decided per loop.
 ```
 
 During the training process, we need to monitor the loss and the model accuracy. Each of these combinations could take from a minute to several minutes (depending on the use CPU or GPU), we would want to log the outputs of each to use further for comparison. We would therefore be using the keras' tensorboard callback function when we compile and fit the model instance. 
