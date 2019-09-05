@@ -27,7 +27,7 @@ I'll be using one of the most prevalent datasets for image recognition - Cats vs
 
 > All training images have certain features that are helpful in differentiating between the given categories, and in order to only use those differentiating features in the hidden layers, we need to get rid of the the non-feature data from these images (for example - color and image size are components of the data but do not determine whether the image is of a cat or a dog).
 
-## Customize and Train Model
+## Training the Model
 We'll be trying out unique combinations of CNN structures, each having different:
 - Convolutional layer
 - Dense layer & 
@@ -62,10 +62,10 @@ model.summary()
 ```
 
 
-## Testing the Selected Model
+## Testing the Model
 
 
 
 
-## Saving the Selected Model
+## Save
 
