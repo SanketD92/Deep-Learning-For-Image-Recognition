@@ -1,3 +1,20 @@
-  language: python
-  script:
-    - pytest
+branches:
+only:
+  - master
+  - dev
+
+language: python
+script:
+  - pytest
+
+python:
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7"
+  
+env:
+ - IS_TRAVIS=true
+
+after_success:
+  coveralls
