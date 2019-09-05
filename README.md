@@ -62,7 +62,7 @@ model.summary()
 ```
 
 
-## Testing the Model
+## Test
 
 
 
