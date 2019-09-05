@@ -45,6 +45,7 @@ for dense_layer in dense_layers:
             # Training Convolutional Neural Networks according to layer configurations decided per loop.
 ```
 
+
 During the training process, we need to monitor the loss and the model accuracy. Each of these combinations could take from a minute to several minutes (depending on the use CPU or GPU), we would want to log the outputs of each to use further for comparison. We would therefore be using the keras' tensorboard callback function when we compile and fit the model instance. 
 
 <p align="center">
