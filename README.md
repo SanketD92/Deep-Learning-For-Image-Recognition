@@ -60,7 +60,7 @@ Let's check out the vitals for the 3-conv-128-nodes-1-dense model
 
 Epoch Accuracy/Loss             |  Epoch Validation Accuracy/Loss
 :-------------------------:|:-------------------------:
-![](/assets/tb1.png)  |  ![](assets/tb2.png)
+![screenshot](assets/tb1.png)  |  ![screenshot](assets/tb2.png)
 
 ```python
 Model: "sequential"
