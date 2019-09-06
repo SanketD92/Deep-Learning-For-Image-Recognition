@@ -1,8 +1,5 @@
-# Image Recognition with TensorFlow & Keras
-
-<p>
-<img src="https://circleci.com/gh/SanketD92/Deep-Learning-For-Image-Recognition/tree/master.svg?style=svg"/>
-</p>
+# Image Recognition with TensorFlow & Keras 
+[![Build Status](https://circleci.com/gh/SanketD92/Deep-Learning-For-Image-Recognition/tree/master.svg?style=shield)](https://circleci.com/gh/SanketD92/Deep-Learning-For-Image-Recognition/tree/master)
 
 <p align="center">
 <img src="assets/robo_dude.png" width="625"/>
