@@ -56,7 +56,11 @@ During the training process, we need to monitor the loss and the model accuracy.
 
 >Upon going through all CNN combinations, we see from the logs that the 3-conv-128-nodes-1-dense model has performed better than the rest.
 
-Charts for the 3-conv-128-nodes-1-dense model
+Let's check out the vitals for the 3-conv-128-nodes-1-dense model
+
+Epoch Accuracy/Loss             |  Epoch Validation Accuracy/Loss
+:-------------------------:|:-------------------------:
+![screenshot](assets/tb1.png)  |  ![screenshot](assets/tb2.png)
 
 ```python
 Model: "sequential"
