@@ -1,5 +1,4 @@
-# Image Recognition with TensorFlow & Keras 
-[![Build Status](https://circleci.com/gh/SanketD92/Deep-Learning-For-Image-Recognition/tree/master.svg?style=shield)](https://circleci.com/gh/SanketD92/Deep-Learning-For-Image-Recognition/tree/master)
+# Image Recognition with TensorFlow & Keras [![Build Status](https://circleci.com/gh/SanketD92/Deep-Learning-For-Image-Recognition/tree/master.svg?style=shield)](https://circleci.com/gh/SanketD92/Deep-Learning-For-Image-Recognition/tree/master)
 
 <p align="center">
 <img src="assets/robo_dude.png" width="625"/>
@@ -67,11 +66,6 @@ Epoch Accuracy/Loss             |  Epoch Validation Accuracy/Loss
 <p align="center">
 <img src="assets/summary.PNG"/>
 </p>
-
-## Test
-
-
-
 
 ## Save
 
