@@ -68,5 +68,3 @@ Epoch Accuracy/Loss             |  Epoch Validation Accuracy/Loss
 <img src="assets/summary.PNG"/>
 </p>
 
-## Save
-
